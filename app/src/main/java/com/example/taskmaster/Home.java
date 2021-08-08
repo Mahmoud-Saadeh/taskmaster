@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.taskmaster.databinding.FragmentFirstBinding;
+import com.example.taskmaster.databinding.HomeBinding;
 
-public class FirstFragment extends Fragment {
+public class Home extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private HomeBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,19 +21,25 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = HomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                NavHostFragment.findNavController(Home.this)
+                        .navigate(R.id.action_Home_to_AddTask);
+            }
+        });
+        binding.allTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(Home.this)
+                        .navigate(R.id.action_Home_to_AllTasks);
             }
         });
     }

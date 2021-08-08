@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.taskmaster.databinding.FragmentSecondBinding;
+import com.example.taskmaster.databinding.AddTaskBinding;
 
-public class SecondFragment extends Fragment {
+public class AddTask extends Fragment {
 
-    private FragmentSecondBinding binding;
+    private AddTaskBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,7 +22,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
+        binding = AddTaskBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -29,11 +30,10 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                Toast.makeText(getActivity(), "submitted!", Toast.LENGTH_SHORT).show();
             }
         });
     }
