@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="app_title">TaskMaster</string>
-<!--    <string name="second_fragment_label">Second Fragment</string>-->
+    <!--    <string name="second_fragment_label">Second Fragment</string>-->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -13,4 +13,8 @@
     <string name="all_tasks">All Tasks</string>
     <string name="task_title">Task Title</string>
     <string name="task_description">Task Description</string>
+    <string name="task_detail">Task Detail</string>
+    <string name="your_username">Your Username</string>
+    <string name="save">Save</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -8,25 +8,73 @@
     android:padding="40dp">
 
     <TextView
+        android:id="@+id/homePageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="My Tasks"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="40dp"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homePageTitle">
+
+        <Button
+            android:id="@+id/shopButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/mybutton"
+            android:text="Shop"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_text" />
+
+        <Button
+            android:id="@+id/studyButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/mybutton"
+            android:text="Study"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_text"
+            android:layout_marginEnd="10dp"
+            />
+        <Button
+            android:id="@+id/trainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/mybutton"
+            android:text="Train"
+            android:textColor="@color/gray_text"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="120dp"
         android:contentDescription="myTasks"
         android:src="@drawable/tasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,8 +92,8 @@
             android:layout_weight="0.5"
             android:text="@string/add_task"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/mybutton"
-            android:textColor="@color/gray_text"/>
+            android:textColor="@color/gray_text"
+            android:background="@drawable/mybutton"/>
 
         <Button
             android:id="@+id/allTasks"
@@ -58,5 +106,17 @@
 
             />
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_settings"
+        android:contentDescription="@string/settings"
+        android:background="@color/light_blue"
+        android:backgroundTint="@color/light_blue"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
