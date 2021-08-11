@@ -1,47 +1,24 @@
 package com.example.taskmaster;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.taskmaster.databinding.AddTaskBinding;
-
-public class AddTask extends Fragment {
-
-    private AddTaskBinding binding;
+public class AddTask extends AppCompatActivity {
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_task);
 
-        binding = AddTaskBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.addTask.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.addTask).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "submitted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "submitted!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
 }
