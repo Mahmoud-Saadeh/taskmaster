@@ -1,61 +1,62 @@
 package com.example.taskmaster;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+
+import com.example.taskmaster.room.AppDatabase;
+import com.example.taskmaster.room.TaskDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
-//    private AppBarConfiguration appBarConfiguration;
-//    private ActivityMainBinding binding;
     private List<Task> taskList = new ArrayList<>();
+    private AppDatabase db;
+    private TaskDao taskDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
         setContentView(R.layout.activity_main);
-//        setSupportActionBar(binding.toolbar);
-//
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+//        taskList.add(new Task("Do 100 push-ups","Training", TaskStates.IN_PROGRESS));
+//        taskList.add(new Task("Solve ASAC assignments","Studying", TaskStates.COMPLETE));
+//        taskList.add(new Task("Buy Coffee","Shopping", TaskStates.ASSIGNED));
+//        taskList.add(new Task("play CS GO","Playing", TaskStates.NEW));
+//        taskList.add(new Task("Eat dinner","Eating", TaskStates.COMPLETE));
+
+    }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
         RecyclerView taskRecyclerView = findViewById(R.id.task_list);
 
-        taskList.add(new Task("Do 100 push-ups","Training", TaskStates.IN_PROGRESS));
-        taskList.add(new Task("Solve ASAC assignments","Studying", TaskStates.COMPLETE));
-        taskList.add(new Task("Buy Coffee","Shopping", TaskStates.ASSIGNED));
-        taskList.add(new Task("play CS GO","Playing", TaskStates.NEW));
-        taskList.add(new Task("Eat dinner","Eating", TaskStates.COMPLETE));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.i("HOME", "onResume: " + preferences.getString("userName", "My Tasks"));
 
-        TaskViewAdapter adapter = new TaskViewAdapter(taskList, new TaskViewAdapter.OnTaskItemClickListener() {
-            @Override
-            public void onItemClicked(int position) {
-                Intent goToDetailsIntent = new Intent(getBaseContext(), TaskDetail.class);
-                goToDetailsIntent.putExtra("task_title", taskList.get(position).getTitle());
-                goToDetailsIntent.putExtra("task_body", taskList.get(position).getBody());
-                goToDetailsIntent.putExtra("task_state", taskList.get(position).getState().toString());
-                startActivity(goToDetailsIntent);
-            }
+        ((TextView) findViewById(R.id.homePageTitle)).setText(preferences.getString("userName", "My Tasks") + "'s Tasks");
+
+        db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "Task").allowMainThreadQueries().build();
+        taskDao = db.taskDao();
+
+        taskList = taskDao.findAll();
+
+        TaskViewAdapter adapter = new TaskViewAdapter(taskList, position -> {
+            Intent goToDetailsIntent = new Intent(getBaseContext(), TaskDetail.class);
+            goToDetailsIntent.putExtra("task_uid", taskList.get(position).getUid());
+            startActivity(goToDetailsIntent);
         });
 
 
@@ -72,36 +73,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settings);
         });
 
-        findViewById(R.id.addTaskMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToAddTask = new Intent(getBaseContext(),AddTask.class);
-                startActivity(goToAddTask);
-            }
+        findViewById(R.id.addTaskMenu).setOnClickListener(view -> {
+            Intent goToAddTask = new Intent(getBaseContext(),AddTask.class);
+            startActivity(goToAddTask);
         });
-    }
-
-
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
-
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //homePageTitle
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Log.i("HOME", "onResume: " + preferences.getString("userName", "My Tasks"));
-
-        ((TextView) findViewById(R.id.homePageTitle)).setText(preferences.getString("userName", "My Tasks") + "'s Tasks");
     }
 }
