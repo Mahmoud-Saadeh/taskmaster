@@ -19,12 +19,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/taskDetailState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STATE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailTitle"
+        android:layout_marginTop="10dp"
+        style="@style/TextAppearance.AppCompat.Small"/>
+
+    <TextView
+        android:id="@+id/taskDetailBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis enim vitae turpis suscipit, eget sollicitudin purus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-        style="@style/TextAppearance.AppCompat.Body1"
+        style="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle"
-        android:layout_marginTop="60dp"/>
+        android:layout_marginTop="50dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

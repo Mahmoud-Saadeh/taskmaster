@@ -16,3 +16,8 @@
 
 - 11/8/2021: updated the home page:
     1. I created a recycler view to display all of the tasks in the home page, and when you click on any one you will go to that task detail page with add task button in the header.
+    
+- 12/8/2021: Implemented Room database
+    1. added the ability to add a new task by filling in the form
+    1. the tasks will appear on the home page
+    1. in the detail page the info that is related to that task is there like the body
