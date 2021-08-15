@@ -21,3 +21,6 @@
     1. added the ability to add a new task by filling in the form
     1. the tasks will appear on the home page
     1. in the detail page the info that is related to that task is there like the body
+
+- 15/8/2021: [Espresso Tests](app/src/androidTest/java/com/example/taskmaster)
+    1. added tests for all of the pages and tests for all of the functionality
