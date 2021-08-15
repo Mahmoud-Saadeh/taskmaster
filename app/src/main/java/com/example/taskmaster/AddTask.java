@@ -52,8 +52,10 @@ public class AddTask extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                String taskTitle = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskTitle)).getEditText()).getText().toString();
-                String taskBody = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskDescription)).getEditText()).getText().toString();
+                String taskTitle = ((TextView) findViewById(R.id.taskTitle)).getText().toString();
+                String taskBody = ((TextView) findViewById(R.id.taskDescription)).getText().toString();
+//                String taskTitle = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskTitle)).getEditText()).getText().toString();
+//                String taskBody = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskDescription)).getEditText()).getText().toString();
                 String taskState = ((Spinner) findViewById(R.id.task_state_spinner)).getSelectedItem().toString();
                 Task newTask = new Task(taskBody, taskTitle, taskState);
 

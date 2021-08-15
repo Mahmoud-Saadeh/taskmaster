@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userName"
+        android:id="@+id/userNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/your_username"
@@ -29,7 +29,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@+id/userName"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
+        app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
         android:layout_marginTop="40dp"
         android:text="@string/save"
         android:drawableEnd="@drawable/ic_save"

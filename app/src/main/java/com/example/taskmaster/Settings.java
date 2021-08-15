@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,7 +26,8 @@ public class Settings extends AppCompatActivity {
         findViewById(R.id.saveUserName).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String textInputLayout = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.userName)).getEditText()).getText().toString();
+                String textInputLayout = ((TextView) findViewById(R.id.userName)).getText().toString();
+//                String textInputLayout = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.userName)).getEditText()).getText().toString();
 
                 preferenceEditor.putString("userName", textInputLayout);
 
