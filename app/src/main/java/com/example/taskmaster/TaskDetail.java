@@ -9,8 +9,11 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
 import com.example.taskmaster.room.AppDatabase;
 import com.example.taskmaster.room.TaskDao;
 
@@ -28,11 +31,28 @@ public class TaskDetail extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "Task").allowMainThreadQueries().build();
         taskDao = db.taskDao();
 
-        Task task = taskDao.findTaskByUid(intent.getExtras().getLong("task_uid"));
+        Amplify.API.query(
+                ModelQuery.get(com.amplifyframework.datastore.generated.model.Task.class, intent.getExtras().getString("task_id")),
+                response -> {
+                    runOnUiThread(new Runnable() {
 
-        ((TextView) findViewById(R.id.taskDetailTitle)).setText(task.getTitle());
-        ((TextView) findViewById(R.id.taskDetailBody)).setText(task.getBody());
-        ((TextView) findViewById(R.id.taskDetailState)).setText(task.getState());
+                        @Override
+                        public void run() {
+
+                            ((TextView) findViewById(R.id.taskDetailTitle)).setText(response.getData().getTitle());
+                            ((TextView) findViewById(R.id.taskDetailBody)).setText(response.getData().getBody());
+                            ((TextView) findViewById(R.id.taskDetailState)).setText(response.getData().getState());
+
+                        }
+                    });
+
+                },
+                error -> Log.e("MyAmplifyApp", error.toString(), error)
+        );
+
+//        Task task = taskDao.findTaskByUid(intent.getExtras().getString("task_id"));
+
+
     }
 
 //    @Override
