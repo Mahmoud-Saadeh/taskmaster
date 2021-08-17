@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHolder> {
 
-    private final List<Task> taskList;
+    private final List<com.amplifyframework.datastore.generated.model.Task> taskList;
     private OnTaskItemClickListener listener;
 
     public interface OnTaskItemClickListener {
@@ -20,7 +20,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
 //        void onDeleteItem(int position);
     }
 
-    public TaskViewAdapter(List<Task> taskList, OnTaskItemClickListener listener) {
+    public TaskViewAdapter(List<com.amplifyframework.datastore.generated.model.Task> taskList, OnTaskItemClickListener listener) {
         this.taskList = taskList;
         this.listener = listener;
     }
@@ -34,7 +34,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Task task = taskList.get(position);
+        com.amplifyframework.datastore.generated.model.Task task = taskList.get(position);
         holder.title.setText(task.getTitle());
         holder.state.setText(task.getState().toString());
     }

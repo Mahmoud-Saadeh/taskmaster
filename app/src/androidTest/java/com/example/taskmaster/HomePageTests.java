@@ -6,6 +6,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -22,19 +23,21 @@ public class HomePageTests {
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
+    public void SettingButtonTest(){
+        onView(withId(R.id.settingsButton)).perform(click());
+
+        onView(withId(R.id.saveUserName)).check(matches(isDisplayed()));
+        Espresso.pressBack();
+    }
+    @Test
     public void AddTaskButtonTest() {
         onView(withText("TaskMaster")).check(matches(isDisplayed()));
 
         onView(withId(R.id.addTaskMenu)).perform(click());
 
-        onView(withId(R.id.task_state_spinner)).check(matches(isDisplayed()));
+        onView(withId(R.id.taskTitleLayout)).check(matches(isDisplayed()));
 
     }
 
-    @Test
-    public void SettingButtonTest(){
-        onView(withId(R.id.settingsButton)).perform(click());
 
-        onView(withId(R.id.saveUserName)).check(matches(isDisplayed()));
-    }
 }

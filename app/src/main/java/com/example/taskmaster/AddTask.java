@@ -13,6 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.example.taskmaster.room.AppDatabase;
 import com.example.taskmaster.room.TaskDao;
 import com.google.android.material.textfield.TextInputLayout;
@@ -52,16 +57,45 @@ public class AddTask extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+
                 String taskTitle = ((TextView) findViewById(R.id.taskTitle)).getText().toString();
                 String taskBody = ((TextView) findViewById(R.id.taskDescription)).getText().toString();
-//                String taskTitle = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskTitle)).getEditText()).getText().toString();
-//                String taskBody = Objects.requireNonNull(((TextInputLayout) findViewById(R.id.taskDescription)).getEditText()).getText().toString();
                 String taskState = ((Spinner) findViewById(R.id.task_state_spinner)).getSelectedItem().toString();
+
                 Task newTask = new Task(taskBody, taskTitle, taskState);
 
                 ((TextView) findViewById(R.id.tasks_count)).setText("Total tasks: "+ taskDao.findAll().size());
 
-                taskDao.addTask(newTask);
+//                try {
+//                    Amplify.addPlugin(new AWSDataStorePlugin());
+//                    Amplify.configure(getApplicationContext());
+//
+//                    Log.i("Tutorial", "Initialized Amplify");
+//                } catch (AmplifyException e) {
+//                    Log.e("Tutorial", "Could not initialize Amplify", e);
+//                }
+//                try {
+//                    // Add these lines to add the AWSApiPlugin plugins
+//                    Amplify.addPlugin(new AWSApiPlugin());
+//                    Amplify.configure(getBaseContext());
+//
+//                    Log.i("MyAmplifyApp", "Initialized Amplify");
+//                } catch (AmplifyException error) {
+//                    Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+//                }
+
+                com.amplifyframework.datastore.generated.model.Task task = com.amplifyframework.datastore.generated.model.Task.builder()
+                        .uid("1").title(taskTitle).body(taskBody).state(taskState)
+                        .build();
+
+                Amplify.API.mutate(ModelMutation.create(task),
+                        response -> {
+                            Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId());
+                            taskDao.addTask(newTask);
+                        },
+                        error -> Log.e("MyAmplifyApp", "Create failed", error)
+                );
+
 
                 Toast.makeText(getBaseContext(), "submitted!", Toast.LENGTH_SHORT).show();
             }

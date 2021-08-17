@@ -38,7 +38,7 @@ public class AddTaskTest {
 
         onView(withId(R.id.task_state_spinner)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.taskTitle)).perform(typeText("write espresso test3"), closeSoftKeyboard());
+        onView(withId(R.id.taskTitle)).perform(typeText("write espresso test"), closeSoftKeyboard());
         onView(withId(R.id.taskDescription)).perform(typeText("Write tests for all of the pages and their functionality"), closeSoftKeyboard());
         onView(withId(R.id.task_state_spinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("COMPLETE"))).perform(click());
@@ -52,9 +52,13 @@ public class AddTaskTest {
     }
 
     @Test
-    public void taskDetails(){
-        onView(withId(R.id.task_list))
-                .perform(actionOnItemAtPosition(0, click()));
-        onView(withText("shopping")).check(matches(isDisplayed()));
+    public void taskDetails() throws InterruptedException {
+//        onView(withId(R.id.task_list))
+//                .perform(actionOnItemAtPosition(0, click()));
+        //progress dialog is now shown
+        Thread.sleep(1500);
+        onView(withText("write espresso test")).perform(click());
+        Thread.sleep(1500);
+        onView(withText("write espresso test")).check(matches(isDisplayed()));
     }
 }
