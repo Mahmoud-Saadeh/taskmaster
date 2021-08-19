@@ -1,5 +1,13 @@
 # Task Master
     
+- 19/8/2021:
+    1. Added the Team Schema with a relation od one to many with the task schema
+    2. in the setting page I added a spinner to choose between the available teams and then filter the tasks that are displayed on the home page by the team id
+    3. in the add task page I added a spinner to assign a team to the task that you want to add
+        - ![img.png](screenshots/homeTeam.png)
+        - ![img.png](screenshots/addTaskTeam.png)
+        - ![img.png](screenshots/settingsTeam.png)
+
 - 17/8/2021: 
     1. Implemented AWS Amplify to access your data in DynamoDB instead of in Room.
     1. store the added tasks in DynamoDB and in Room also to make it available offline (this is a TODO)
