@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.example.taskmaster.room.AppDatabase;
-import com.example.taskmaster.room.TaskDao;
+//import com.example.taskmaster.room.AppDatabase;
+//import com.example.taskmaster.room.TaskDao;
 
 public class TaskDetail extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
-    private AppDatabase db;
-    private TaskDao taskDao;
+//    private AppDatabase db;
+//    private TaskDao taskDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public class TaskDetail extends AppCompatActivity {
         setContentView(R.layout.activity_task_detail);
 
         Intent intent = getIntent();
-        db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "Task").allowMainThreadQueries().build();
-        taskDao = db.taskDao();
+//        db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "Task").allowMainThreadQueries().build();
+//        taskDao = db.taskDao();
 
         Amplify.API.query(
                 ModelQuery.get(com.amplifyframework.datastore.generated.model.Task.class, intent.getExtras().getString("task_id")),

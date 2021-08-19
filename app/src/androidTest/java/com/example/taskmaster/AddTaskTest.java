@@ -33,22 +33,26 @@ public class AddTaskTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void addTaskTest(){
+    public void addTaskTest() throws InterruptedException {
         onView(withId(R.id.addTaskMenu)).perform(click());
 
         onView(withId(R.id.task_state_spinner)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.taskTitle)).perform(typeText("write espresso test"), closeSoftKeyboard());
+        onView(withId(R.id.taskTitle)).perform(typeText("write espresso test9"), closeSoftKeyboard());
         onView(withId(R.id.taskDescription)).perform(typeText("Write tests for all of the pages and their functionality"), closeSoftKeyboard());
         onView(withId(R.id.task_state_spinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("COMPLETE"))).perform(click());
+
+        onView(withId(R.id.task_team_spinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("team3"))).perform(click());
 
         onView(withId(R.id.addTask)).perform(click());
 
         Espresso.pressBack();
 
         onView(withId(R.id.homePageTitle)).check(matches(isDisplayed()));
-//        onView(withText("write espresso test3")).check(matches(isDisplayed()));
+        Thread.sleep(1500);
+        onView(withText("write espresso test9")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -57,8 +61,8 @@ public class AddTaskTest {
 //                .perform(actionOnItemAtPosition(0, click()));
         //progress dialog is now shown
         Thread.sleep(1500);
-        onView(withText("write espresso test")).perform(click());
+        onView(withText("write espresso test9")).perform(click());
         Thread.sleep(1500);
-        onView(withText("write espresso test")).check(matches(isDisplayed()));
+        onView(withText("write espresso test9")).check(matches(isDisplayed()));
     }
 }

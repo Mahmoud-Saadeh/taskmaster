@@ -1,11 +1,12 @@
-package com.example.taskmaster.room;
-
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
-
-import com.example.taskmaster.Task;
-
-@Database(entities = {Task.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
-    public abstract TaskDao taskDao();
-}
+//package com.example.taskmaster.room;
+//
+//import androidx.room.Database;
+//import androidx.room.RoomDatabase;
+//
+//import com.amplifyframework.datastore.generated.model.Task;
+////import com.example.taskmaster.Task;
+//
+//@Database(entities = {Task.class}, version = 1, exportSchema = false)
+//public abstract class AppDatabase extends RoomDatabase {
+//    public abstract TaskDao taskDao();
+//}

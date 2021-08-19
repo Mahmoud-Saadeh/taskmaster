@@ -33,13 +33,35 @@
             android:id="@+id/userName"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/spinnerTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
+        tools:layout_editor_absoluteX="40dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/team"
+            android:layout_marginEnd="20dp"
+            android:textSize="20sp"/>
+        <Spinner
+            android:id="@+id/task_team_spinner_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Button
         android:id="@+id/saveUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTeam"
         android:layout_marginTop="40dp"
         android:text="@string/save"
         android:drawableEnd="@drawable/ic_save"

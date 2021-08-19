@@ -1,6 +1,8 @@
 package com.example.taskmaster;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -8,6 +10,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -31,7 +37,10 @@ public class SettingsTest {
 
         onView(withId(R.id.saveUserName)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.userName)).perform(typeText("Mahmoud"), closeSoftKeyboard());
+        onView(withId(R.id.userName)).perform(clearText(),typeText("Mahmoud"), closeSoftKeyboard());
+
+        onView(withId(R.id.task_team_spinner_settings)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("team3"))).perform(click());
 
         onView(withId(R.id.saveUserName)).perform(click());
 
@@ -40,5 +49,6 @@ public class SettingsTest {
         onView(withId(R.id.homePageTitle)).check(matches(isDisplayed()));
 
         onView(withText("Mahmoud's Tasks")).check(matches(isDisplayed()));
+        onView(withText("Filtered by: team3")).check(matches(isDisplayed()));
     }
 }
