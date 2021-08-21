@@ -1,5 +1,7 @@
 # Task Master
     
+- 21/8/2021
+    1. build [taskmaster.apk file](./taskmaster.apk)
 - 19/8/2021:
     1. Added the Team Schema with a relation od one to many with the task schema
     2. in the setting page I added a spinner to choose between the available teams and then filter the tasks that are displayed on the home page by the team id
