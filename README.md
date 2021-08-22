@@ -1,5 +1,15 @@
 # Task Master
+In this app you can sign up with your email and start adding tasks and filtering them by their team
+
+- 22/8/2021
+    1. Sign In page to enter into the App
+        - ![SignIn.png](screenshots/SignIn.png)
+    2. SignUp page to register with new account
+        - ![SignUp.png](screenshots/SignUp.png)
+    3. Sign out button in a menu
+        - ![signOut.png](screenshots/signOut.png)
     
+
 - 21/8/2021
     1. build [taskmaster.apk file](./taskmaster.apk)
 - 19/8/2021:

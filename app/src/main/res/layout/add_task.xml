@@ -4,129 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTask"
-    android:padding="40dp">
+    tools:context=".AddTask">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Add Task"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/taskTitleLayout"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/task_title"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="40dp"
-        android:layout_marginTop="40dp">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/taskTitle"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_app_bar"
+            app:title="@string/app_title" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/taskDescriptionLayout"
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/task_description"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitleLayout"
-        tools:layout_editor_absoluteX="40dp">
+        android:layout_height="match_parent"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/taskDescription"
+        android:padding="40dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Add Task"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/taskTitleLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/task_title"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:layout_editor_absoluteX="40dp"
+            android:layout_marginTop="40dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/taskDescriptionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_description"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/taskTitleLayout"
+            tools:layout_editor_absoluteX="40dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-<!--    <EditText-->
-<!--        android:id="@+id/textArea_information"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@null"-->
-<!--        android:gravity="top|left"-->
-<!--        android:inputType="textMultiLine"-->
-<!--        android:overScrollMode="always"-->
-<!--        android:scrollbarStyle="insideInset"-->
-<!--        android:scrollbars="vertical"-->
-<!--        android:lines="6"-->
-<!--        android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--        android:scrollHorizontally="false" />-->
+        <!--    <EditText-->
+        <!--        android:id="@+id/textArea_information"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:background="@null"-->
+        <!--        android:gravity="top|left"-->
+        <!--        android:inputType="textMultiLine"-->
+        <!--        android:overScrollMode="always"-->
+        <!--        android:scrollbarStyle="insideInset"-->
+        <!--        android:scrollbars="vertical"-->
+        <!--        android:lines="6"-->
+        <!--        android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--        android:scrollHorizontally="false" />-->
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/spinnerState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionLayout"
-        tools:layout_editor_absoluteX="40dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center_vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/spinnerState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescriptionLayout"
+            tools:layout_editor_absoluteX="40dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/state"
+                android:layout_marginEnd="20dp"
+                android:textSize="20sp"/>
+            <Spinner
+                android:id="@+id/task_state_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/spinnerTeam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerState"
+            tools:layout_editor_absoluteX="40dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/team"
+                android:layout_marginEnd="20dp"
+                android:textSize="20sp"/>
+            <Spinner
+                android:id="@+id/task_team_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/addTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mybutton"
+            android:text="@string/add_task"
+            android:textColor="@color/gray_text"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerTeam" />
+
         <TextView
+            android:id="@+id/tasks_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/state"
-            android:layout_marginEnd="20dp"
-            android:textSize="20sp"/>
-        <Spinner
-            android:id="@+id/task_state_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/spinnerTeam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerState"
-        tools:layout_editor_absoluteX="40dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/team"
-            android:layout_marginEnd="20dp"
-            android:textSize="20sp"/>
-        <Spinner
-            android:id="@+id/task_team_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:text="Total tasks: 0"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addTask" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/addTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/mybutton"
-        android:text="@string/add_task"
-        android:textColor="@color/gray_text"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTeam" />
-
-    <TextView
-        android:id="@+id/tasks_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total tasks: 0"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTask" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

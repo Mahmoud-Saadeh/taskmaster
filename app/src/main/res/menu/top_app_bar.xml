@@ -1,11 +1,26 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/addTaskMenu"
         android:icon="@drawable/ic_add"
         android:title="@string/add_task"
         android:contentDescription="@string/add_task"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/subMenu"
+        app:showAsAction="always"
+        android:title=""
+        android:icon="@drawable/ic_menu">
+        <menu>
+            <item android:id="@+id/signOutMenu"
+                android:title="@string/sign_out"
+                android:onClick="signOutHandler"
+                />
+        </menu>
+    </item>
 
+<!--    <item android:id="@+id/share"-->
+<!--        android:icon="@drawable/ic_share"-->
+<!--        android:title="@string/share" />-->
 </menu>

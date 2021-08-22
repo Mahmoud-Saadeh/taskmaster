@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,7 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
@@ -41,35 +46,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i("TEST", "onCreate: STARTED");
 
-        try {
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.configure(getApplicationContext());
-
-            Log.i("Tutorial", "Initialized Amplify");
-        } catch (AmplifyException e) {
-            Log.e("Tutorial", "Could not initialize Amplify", e);
-        }
-
         Amplify.API.query(ModelQuery.list(Team.class),
                 response -> {
                     int count = 0;
-                    for (Team team: response.getData()){
+                    for (Team team : response.getData()) {
                         count++;
                     }
-                    if (count == 0){
+                    if (count == 0) {
                         Team team1 = Team.builder().name("team1").build();
                         Team team2 = Team.builder().name("team2").build();
                         Team team3 = Team.builder().name("team3").build();
 
-                        Amplify.API.mutate(ModelMutation.create(team1),success ->{}, failure ->{
-                            Log.e("save", "onCreate: ", failure );
+                        Amplify.API.mutate(ModelMutation.create(team1), success -> {
+                        }, failure -> {
+                            Log.e("save", "onCreate: ", failure);
                         });
-                        Amplify.API.mutate(ModelMutation.create(team2),success ->{}, failure ->{
-                            Log.e("save", "onCreate: ", failure );
+                        Amplify.API.mutate(ModelMutation.create(team2), success -> {
+                        }, failure -> {
+                            Log.e("save", "onCreate: ", failure);
                         });
-                        Amplify.API.mutate(ModelMutation.create(team3),success ->{}, failure ->{
-                            Log.e("save", "onCreate: ", failure );
+                        Amplify.API.mutate(ModelMutation.create(team3), success -> {
+                        }, failure -> {
+                            Log.e("save", "onCreate: ", failure);
                         });
                     }
                 },
@@ -78,19 +76,19 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         findViewById(R.id.settingsButton).setOnClickListener(view14 -> {
-            Intent settings = new Intent(getBaseContext(),Settings.class);
+            Intent settings = new Intent(getBaseContext(), Settings.class);
             startActivity(settings);
         });
 
         findViewById(R.id.addTaskMenu).setOnClickListener(view -> {
-            Intent goToAddTask = new Intent(getBaseContext(),AddTask.class);
+            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
             startActivity(goToAddTask);
         });
 
     }
 
 
-//    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
+    //    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
     protected void onResume() {
         super.onResume();
@@ -99,21 +97,30 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        ((TextView) findViewById(R.id.homePageTitle)).setText(preferences.getString("userName", "My Tasks") + "'s Tasks");
-        ((TextView) findViewById(R.id.home_page_filter)).setText("Filtered by: "+preferences.getString("teamName", "All"));
+//        ((TextView) findViewById(R.id.homePageTitle)).setText(preferences.getString("userName", "My Tasks") + "'s Tasks");
+        ((TextView) findViewById(R.id.homePageTitle)).setText(getCurrentUser().getUsername() + "'s Tasks");
+        ((TextView) findViewById(R.id.home_page_filter)).setText("Filtered by: " + preferences.getString("teamName", "All"));
         String teamId = preferences.getString("teamId", "");
 //        Amplify.API.query(TaskByDate.)
-        if (teamId.equals("")){
+        if (teamId.equals("")) {
             fetchAllData();
-        }else {
+        } else {
             fetchDataByTeamId(teamId);
         }
 
     }
 
+    private AuthUser getCurrentUser() {
+        AuthUser authUser = Amplify.Auth.getCurrentUser();
+        return authUser;
+//        Log.i(TAG, "getCurrentUser: " + authUser.toString());
+//        Log.i(TAG, "getCurrentUser: username" + authUser.getUsername());
+//        Log.i(TAG, "getCurrentUser: userId" + authUser.getUserId());
+    }
+
 //    @SuppressLint("NotifyDataSetChanged")
 
-    private void fetchAllData(){
+    private void fetchAllData() {
 
         Amplify.API.query(
                 ModelQuery.list(Task.class),
@@ -150,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-    private void fetchDataByTeamId(String teamId){
+
+    private void fetchDataByTeamId(String teamId) {
 
         Amplify.API.query(
                 ModelQuery.list(Task.class, Task.TEAM_ID.eq(teamId)),
@@ -185,6 +193,62 @@ public class MainActivity extends AppCompatActivity {
                 error -> {
                     Log.e("MyAmplifyApp", "Query failure", error);
                 }
+        );
+    }
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+//
+//        Button signOutMenu = (Button) menu.findItem(R.id.signOutMenu);
+//
+//
+//        signOutMenu.setOnClickListener(view -> {
+//            Amplify.Auth.signOut(
+//                    () -> {
+//                        Log.i("AuthQuickstart", "Signed out successfully");
+//                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+//                        startActivity(intent);
+//                    },
+//                    error -> Log.e("AuthQuickstart", error.toString())
+//            );
+//        });
+//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_app_bar, menu);
+        return true;
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+//        if (item.getItemId() == R.id.signOutMenu) {
+//            Amplify.Auth.signOut(
+//                    () -> {
+//                        Log.i("AuthQuickstart", "Signed out successfully");
+//                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+//                        startActivity(intent);
+//                    },
+//                    error -> Log.e("AuthQuickstart", error.toString())
+//            );
+//            return true;
+//        }
+//        if (item.getItemId() == R.id.subMenu){
+//            Log.i("onOptionsItemSelected", "onOptionsItemSelected: ");
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    public void signOutHandler(MenuItem item) {
+        Amplify.Auth.signOut(
+                () -> {
+                    Log.i("AuthQuickstart", "Signed out successfully");
+                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                    startActivity(intent);
+                },
+                error -> Log.e("AuthQuickstart", error.toString())
         );
     }
 }
