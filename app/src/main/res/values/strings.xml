@@ -19,4 +19,15 @@
     <string name="settings">Settings</string>
     <string name="state">State:</string>
     <string name="team">Team:</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account_signup">Don\'t have an account? Signup</string>
+    <string name="return_to_signin_form">Return to SignIn form</string>
+    <string name="signup">Signup</string>
+    <string name="email">Email</string>
+    <string name="enter_your_verification_code">Enter your verification code</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="confirm">Confirm</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
