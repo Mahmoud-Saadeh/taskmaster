@@ -25,11 +25,13 @@ public final class Task implements Model {
   public static final QueryField TITLE = field("Task", "title");
   public static final QueryField BODY = field("Task", "body");
   public static final QueryField STATE = field("Task", "state");
+  public static final QueryField FILE_NAME = field("Task", "fileName");
   public static final QueryField TEAM_ID = field("Task", "teamID");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
+  private final @ModelField(targetType="String") String fileName;
   private final @ModelField(targetType="ID", isRequired = true) String teamID;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -49,6 +51,10 @@ public final class Task implements Model {
       return state;
   }
   
+  public String getFileName() {
+      return fileName;
+  }
+  
   public String getTeamId() {
       return teamID;
   }
@@ -61,11 +67,12 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String body, String state, String teamID) {
+  private Task(String id, String title, String body, String state, String fileName, String teamID) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.state = state;
+    this.fileName = fileName;
     this.teamID = teamID;
   }
   
@@ -81,6 +88,7 @@ public final class Task implements Model {
               ObjectsCompat.equals(getTitle(), task.getTitle()) &&
               ObjectsCompat.equals(getBody(), task.getBody()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
+              ObjectsCompat.equals(getFileName(), task.getFileName()) &&
               ObjectsCompat.equals(getTeamId(), task.getTeamId()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
@@ -94,6 +102,7 @@ public final class Task implements Model {
       .append(getTitle())
       .append(getBody())
       .append(getState())
+      .append(getFileName())
       .append(getTeamId())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -109,6 +118,7 @@ public final class Task implements Model {
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
+      .append("fileName=" + String.valueOf(getFileName()) + ", ")
       .append("teamID=" + String.valueOf(getTeamId()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -144,6 +154,7 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -153,6 +164,7 @@ public final class Task implements Model {
       title,
       body,
       state,
+      fileName,
       teamID);
   }
   public interface TitleStep {
@@ -170,6 +182,7 @@ public final class Task implements Model {
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep body(String body);
     BuildStep state(String state);
+    BuildStep fileName(String fileName);
   }
   
 
@@ -179,6 +192,7 @@ public final class Task implements Model {
     private String teamID;
     private String body;
     private String state;
+    private String fileName;
     @Override
      public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -188,6 +202,7 @@ public final class Task implements Model {
           title,
           body,
           state,
+          fileName,
           teamID);
     }
     
@@ -217,6 +232,12 @@ public final class Task implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep fileName(String fileName) {
+        this.fileName = fileName;
+        return this;
+    }
+    
     /** 
      * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
      * This should only be set when referring to an already existing object.
@@ -240,12 +261,13 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state, String teamId) {
+    private CopyOfBuilder(String id, String title, String body, String state, String fileName, String teamId) {
       super.id(id);
       super.title(title)
         .teamId(teamId)
         .body(body)
-        .state(state);
+        .state(state)
+        .fileName(fileName);
     }
     
     @Override
@@ -266,6 +288,11 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder state(String state) {
       return (CopyOfBuilder) super.state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder fileName(String fileName) {
+      return (CopyOfBuilder) super.fileName(fileName);
     }
   }
   

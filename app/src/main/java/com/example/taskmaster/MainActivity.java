@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     adapter = new TaskViewAdapter(taskListAmp, position -> {
                         Intent goToDetailsIntent = new Intent(getBaseContext(), TaskDetail.class);
                         goToDetailsIntent.putExtra("task_id", taskListAmp.get(position).getId());
+                        goToDetailsIntent.putExtra("fileName", taskListAmp.get(position).getFileName());
                         startActivity(goToDetailsIntent);
                     });
 

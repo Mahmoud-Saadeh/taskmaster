@@ -28,14 +28,34 @@
         android:layout_marginTop="10dp"
         style="@style/TextAppearance.AppCompat.Small"/>
 
-    <TextView
-        android:id="@+id/taskDetailBody"
+    <ImageView
+        android:id="@+id/taskImageDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis enim vitae turpis suscipit, eget sollicitudin purus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle"
-        android:layout_marginTop="50dp" />
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailState"
+        android:contentDescription="@string/task_image"
+        android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/taskDetailBody"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis enim vitae turpis suscipit, eget sollicitudin purus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskImageDetail" />
+
+    <TextView
+        android:id="@+id/fileLinkDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/download_the_linked_file"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:textColor="@color/light_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailBody" />
 </androidx.constraintlayout.widget.ConstraintLayout>
