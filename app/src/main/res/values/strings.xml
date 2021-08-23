@@ -30,4 +30,7 @@
     <string name="verification_code">Verification Code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_out">Sign Out</string>
+    <string name="upload_file">Upload File</string>
+    <string name="task_image">Task Image</string>
+    <string name="download_the_linked_file">Download the linked file</string>
 </resources>

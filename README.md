@@ -1,6 +1,13 @@
 # Task Master
 In this app you can sign up with your email and start adding tasks and filtering them by their team
 
+- 23/8/2021
+    1. Implemented S3 storage from AWS service
+    2. Edited Add Task page so that a user can add a file to that task
+       - ![addTaskS3.png](screenshots/addTaskS3.png)
+    3. Edited the task details page so that the image will appear as Image view and as a link if it is any other file
+       - ![taskDetailS3.png](screenshots/taskDetailS3.png)
+
 - 22/8/2021
     1. Sign In page to enter into the App
         - ![SignIn.png](screenshots/SignIn.png)
