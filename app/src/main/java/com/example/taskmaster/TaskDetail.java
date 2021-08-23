@@ -10,6 +10,9 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
@@ -26,6 +29,11 @@ public class TaskDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
+
+        findViewById(R.id.addTaskMenu).setOnClickListener(view -> {
+            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
+            startActivity(goToAddTask);
+        });
 
         Intent intent = getIntent();
 //        db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "Task").allowMainThreadQueries().build();
@@ -55,10 +63,32 @@ public class TaskDetail extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_app_bar, menu);
+        return true;
+    }
+
 //    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
+//    public boolean onOptionsItemSelected(MenuItem item) {
+////     Handle item selection
+//        if (item.getItemId() == R.id.addTaskMenu) {
+//            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
+//            startActivity(goToAddTask);
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
 //    }
+
+    public void signOutHandler(MenuItem item) {
+        Amplify.Auth.signOut(
+                () -> {
+                    Log.i("AuthQuickstart", "Signed out successfully");
+                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                    startActivity(intent);
+                },
+                error -> Log.e("AuthQuickstart", error.toString())
+        );
+    }
 }
