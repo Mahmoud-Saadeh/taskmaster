@@ -2,6 +2,7 @@ package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -56,6 +60,11 @@ public class Settings extends AppCompatActivity {
                     Log.e("TEAM_ERROR", "onCreate: ", error);
                 });
 
+        findViewById(R.id.addTaskMenu).setOnClickListener(view -> {
+            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
+            startActivity(goToAddTask);
+        });
+
         findViewById(R.id.saveUserName).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,5 +103,34 @@ public class Settings extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_app_bar, menu);
+        return true;
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+////     Handle item selection
+//        if (item.getItemId() == R.id.addTaskMenu) {
+//            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
+//            startActivity(goToAddTask);
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    public void signOutHandler(MenuItem item) {
+        Amplify.Auth.signOut(
+                () -> {
+                    Log.i("AuthQuickstart", "Signed out successfully");
+                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                    startActivity(intent);
+                },
+                error -> Log.e("AuthQuickstart", error.toString())
+        );
     }
 }

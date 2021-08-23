@@ -196,24 +196,6 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        return super.onCreateOptionsMenu(menu);
-//
-//        Button signOutMenu = (Button) menu.findItem(R.id.signOutMenu);
-//
-//
-//        signOutMenu.setOnClickListener(view -> {
-//            Amplify.Auth.signOut(
-//                    () -> {
-//                        Log.i("AuthQuickstart", "Signed out successfully");
-//                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-//                        startActivity(intent);
-//                    },
-//                    error -> Log.e("AuthQuickstart", error.toString())
-//            );
-//        });
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -223,20 +205,11 @@ public class MainActivity extends AppCompatActivity {
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-//        if (item.getItemId() == R.id.signOutMenu) {
-//            Amplify.Auth.signOut(
-//                    () -> {
-//                        Log.i("AuthQuickstart", "Signed out successfully");
-//                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-//                        startActivity(intent);
-//                    },
-//                    error -> Log.e("AuthQuickstart", error.toString())
-//            );
+////     Handle item selection
+//        if (item.getItemId() == R.id.addTaskMenu) {
+//            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
+//            startActivity(goToAddTask);
 //            return true;
-//        }
-//        if (item.getItemId() == R.id.subMenu){
-//            Log.i("onOptionsItemSelected", "onOptionsItemSelected: ");
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
