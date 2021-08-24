@@ -56,7 +56,7 @@ public class SettingsTest {
         Espresso.pressBack();
 
         onView(withId(R.id.homePageTitle)).check(matches(isDisplayed()));
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 //        onView(withText("Mahmoud's Tasks")).check(matches(isDisplayed()));
         onView(withText("Filtered by: team3")).check(matches(isDisplayed()));
     }
