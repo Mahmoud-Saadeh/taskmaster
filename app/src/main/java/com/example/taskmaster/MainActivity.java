@@ -1,6 +1,7 @@
 package com.example.taskmaster;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,25 +10,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.UserStateDetails;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
-//import com.example.taskmaster.room.AppDatabase;
-//import com.example.taskmaster.room.TaskDao;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +39,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     protected List<Task> taskListAmp = new ArrayList<>();
     protected TaskViewAdapter adapter;
-//    private List<Task> taskList = new ArrayList<>();
-//    private AppDatabase db;
-//    private TaskDao taskDao;
+    public static final String TAG = "NOTIFICATION";
+    private static PinpointManager pinpointManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i("TEST", "onCreate: STARTED");
 
+        // Initialize PinpointManager
+        getPinpointManager(getApplicationContext());
+
         Amplify.API.query(ModelQuery.list(Team.class),
                 response -> {
                     int count = 0;
-                    for (Team team : response.getData()) {
+                    for (Team ignored : response.getData()) {
                         count++;
                     }
                     if (count == 0) {
@@ -58,22 +63,14 @@ public class MainActivity extends AppCompatActivity {
                         Team team3 = Team.builder().name("team3").build();
 
                         Amplify.API.mutate(ModelMutation.create(team1), success -> {
-                        }, failure -> {
-                            Log.e("save", "onCreate: ", failure);
-                        });
+                        }, failure -> Log.e("save", "onCreate: ", failure));
                         Amplify.API.mutate(ModelMutation.create(team2), success -> {
-                        }, failure -> {
-                            Log.e("save", "onCreate: ", failure);
-                        });
+                        }, failure -> Log.e("save", "onCreate: ", failure));
                         Amplify.API.mutate(ModelMutation.create(team3), success -> {
-                        }, failure -> {
-                            Log.e("save", "onCreate: ", failure);
-                        });
+                        }, failure -> Log.e("save", "onCreate: ", failure));
                     }
                 },
-                error -> {
-                    Log.e("TEAM", "onCreate: ", error);
-                });
+                error -> Log.e("TEAM", "onCreate: ", error));
 
         findViewById(R.id.settingsButton).setOnClickListener(view14 -> {
             Intent settings = new Intent(getBaseContext(), Settings.class);
@@ -88,13 +85,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onResume() {
         super.onResume();
-//        if (taskListAmp.size() == 0){
-//            Log.i("test", "onResume: ");
-//        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //        ((TextView) findViewById(R.id.homePageTitle)).setText(preferences.getString("userName", "My Tasks") + "'s Tasks");
@@ -111,11 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private AuthUser getCurrentUser() {
-        AuthUser authUser = Amplify.Auth.getCurrentUser();
-        return authUser;
-//        Log.i(TAG, "getCurrentUser: " + authUser.toString());
-//        Log.i(TAG, "getCurrentUser: username" + authUser.getUsername());
-//        Log.i(TAG, "getCurrentUser: userId" + authUser.getUserId());
+        return Amplify.Auth.getCurrentUser();
     }
 
 //    @SuppressLint("NotifyDataSetChanged")
@@ -152,9 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
                     });
                 },
-                error -> {
-                    Log.e("MyAmplifyApp", "Query failure", error);
-                }
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
     }
 
@@ -191,9 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
                     });
                 },
-                error -> {
-                    Log.e("MyAmplifyApp", "Query failure", error);
-                }
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
     }
 
@@ -204,17 +190,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-////     Handle item selection
-//        if (item.getItemId() == R.id.addTaskMenu) {
-//            Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
-//            startActivity(goToAddTask);
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     public void signOutHandler(MenuItem item) {
         Amplify.Auth.signOut(
                 () -> {
@@ -224,5 +199,44 @@ public class MainActivity extends AppCompatActivity {
                 },
                 error -> Log.e("AuthQuickstart", error.toString())
         );
+    }
+
+    public static PinpointManager getPinpointManager(final Context applicationContext) {
+        if (pinpointManager == null) {
+            final AWSConfiguration awsConfig = new AWSConfiguration(applicationContext);
+            AWSMobileClient.getInstance().initialize(applicationContext, awsConfig, new Callback<UserStateDetails>() {
+                @Override
+                public void onResult(UserStateDetails userStateDetails) {
+                    Log.i("INIT", String.valueOf(userStateDetails.getUserState()));
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.e("INIT", "Initialization error.", e);
+                }
+            });
+
+            PinpointConfiguration pinpointConfig = new PinpointConfiguration(
+                    applicationContext,
+                    AWSMobileClient.getInstance(),
+                    awsConfig);
+
+            pinpointManager = new PinpointManager(pinpointConfig);
+
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                return;
+                            }
+                            final String token = task.getResult();
+                            Log.d(TAG, "Registering push notifications token: " + token);
+                            pinpointManager.getNotificationClient().registerDeviceToken(token);
+                        }
+                    });
+        }
+        return pinpointManager;
     }
 }
