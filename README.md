@@ -1,6 +1,10 @@
 # Task Master
 In this app you can sign up with your email and start adding tasks and filtering them by their team
 
+- 24/8/2021
+    1. Implemented Notification using amplify and firebase
+        - ![Notification.png](screenshots/Notification.png)
+
 - 23/8/2021
     1. Implemented S3 storage from AWS service
     2. Edited Add Task page so that a user can add a file to that task
