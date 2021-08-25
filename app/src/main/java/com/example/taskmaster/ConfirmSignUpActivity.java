@@ -13,14 +13,18 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class ConfirmSignUpActivity extends AppCompatActivity {
     private Boolean isCodeEmpty = true;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_sign_up);
+
+
 
         Intent intent = getIntent();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -59,6 +63,14 @@ public class ConfirmSignUpActivity extends AppCompatActivity {
                     error -> Log.e("AuthQuickstart", error.toString())
             );
         });
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ConfirmSignUpActivity");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "ConfirmSignUpActivity");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Page");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     private void silentSignIn(String userName, String password,SharedPreferences preferences){

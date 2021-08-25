@@ -18,16 +18,20 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class SignInActivity extends AppCompatActivity {
     private Boolean isUserEmpty = true;
     private Boolean isPasswordEmpty = true;
     private static final String TAG = "SIGNIN";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+
 
         configAmplify();
 //        Amplify.Auth.resetPassword(
@@ -111,6 +115,14 @@ public class SignInActivity extends AppCompatActivity {
             Intent signInToSignUp = new Intent(getApplicationContext(), SignupActivity.class);
             startActivity(signInToSignUp);
         });
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "SignInActivity");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "SignInActivity");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Page");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     private void configAmplify(){
