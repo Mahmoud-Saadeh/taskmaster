@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.storage.StorageItem;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -32,6 +33,7 @@ import java.io.File;
 public class TaskDetail extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private String fileURL;
+    private FirebaseAnalytics mFirebaseAnalytics;
 //    private AppDatabase db;
 //    private TaskDao taskDao;
 
@@ -39,6 +41,8 @@ public class TaskDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
+
+
 
         findViewById(R.id.addTaskMenu).setOnClickListener(view -> {
             Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
@@ -101,7 +105,13 @@ public class TaskDetail extends AppCompatActivity {
 
 //        Task task = taskDao.findTaskByUid(intent.getExtras().getString("task_id"));
 
-
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "TaskDetail");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "TaskDetail");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Page");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     @Override

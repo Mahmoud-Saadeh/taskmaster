@@ -32,6 +32,7 @@ import com.amplifyframework.datastore.generated.model.Task;
 //import com.example.taskmaster.room.AppDatabase;
 //import com.example.taskmaster.room.TaskDao;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,6 +44,7 @@ import java.util.List;
 
 public class AddTask extends AppCompatActivity {
     private String uploadedFileName;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @SuppressLint("SetTextI18n")
@@ -50,6 +52,8 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
+
+
 
 //        uploadFile();
 
@@ -131,6 +135,14 @@ public class AddTask extends AppCompatActivity {
 
             Toast.makeText(getBaseContext(), "submitted!", Toast.LENGTH_SHORT).show();
         });
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "AddTask");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "AddTask");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Page");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)

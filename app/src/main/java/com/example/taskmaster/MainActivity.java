@@ -30,6 +30,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
@@ -41,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
     protected TaskViewAdapter adapter;
     public static final String TAG = "NOTIFICATION";
     private static PinpointManager pinpointManager;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("TEST", "onCreate: STARTED");
+
+
 
         // Initialize PinpointManager
         getPinpointManager(getApplicationContext());
@@ -81,7 +85,13 @@ public class MainActivity extends AppCompatActivity {
             Intent goToAddTask = new Intent(getBaseContext(), AddTask.class);
             startActivity(goToAddTask);
         });
-
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainActivity");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "MainActivity");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Page");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
 
