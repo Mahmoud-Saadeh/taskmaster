@@ -1,6 +1,10 @@
 # Task Master
 In this app you can sign up with your email and start adding tasks and filtering them by their team
 
+-25/8/2021
+    1. added firebase analytics
+        - ![analytics.png](screenshots/analytics.png)
+
 - 24/8/2021
     1. Implemented Notification using amplify and firebase
         - ![Notification.png](screenshots/Notification.png)
