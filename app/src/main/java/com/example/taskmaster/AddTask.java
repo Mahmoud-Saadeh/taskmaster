@@ -35,6 +35,7 @@ import com.amplifyframework.datastore.generated.model.Team;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +46,7 @@ import java.util.List;
 public class AddTask extends AppCompatActivity {
     private String uploadedFileName;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private String currentUser = "";
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @SuppressLint("SetTextI18n")
@@ -53,8 +55,31 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
 
+        try {
+            currentUser = Amplify.Auth.getCurrentUser().getUsername();
+        }catch (RuntimeException error){
+            Log.i("currentUser", "onCreate: " + currentUser);
+            if (currentUser.equals("")){
+                Intent goToSignIn = new Intent(this, SignInActivity.class);
+                startActivity(goToSignIn);
+            }
+        }
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
 
-
+        Log.i("getIntent", "onCreate: " + type);
+        Log.i("getIntent", "onCreate: " + (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                try {
+                    onChooseFile((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM)); // Handle single image being sent
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 //        uploadFile();
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
@@ -62,7 +87,8 @@ public class AddTask extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         try {
-                            onChooseFile(result);
+                            assert result.getData() != null;
+                            onChooseFile(result.getData().getData());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -146,13 +172,8 @@ public class AddTask extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    private void onChooseFile(ActivityResult activityResult) throws IOException {
+    private void onChooseFile(Uri uri) throws IOException {
 
-        Uri uri = null;
-        if (activityResult.getData() != null) {
-            uri = activityResult.getData().getData();
-        }
-        assert uri != null;
         uploadedFileName = new Date().toString() + "." + getMimeType(getApplicationContext(),uri);
 
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
@@ -167,8 +188,16 @@ public class AddTask extends AppCompatActivity {
         Amplify.Storage.uploadFile(
                 uploadedFileName,
                 uploadFile,
-                success -> Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey()),
-                error -> Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString())
+                success -> {
+                    Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
+                    Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
+
+                },
+                error -> {
+                    Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString());
+                    Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_SHORT).show();
+
+                }
         );
     }
 

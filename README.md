@@ -1,6 +1,9 @@
 # Task Master
 In this app you can sign up with your email and start adding tasks and filtering them by their team
 
+- 29/8/2021
+    1. Added an intent filter to be able to accept an image file from other apps and add the image to the upload feature in add task
+
 -25/8/2021
     1. added firebase analytics
         - ![analytics.png](screenshots/analytics.png)
