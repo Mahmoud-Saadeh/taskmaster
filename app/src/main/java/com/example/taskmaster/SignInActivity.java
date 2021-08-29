@@ -25,15 +25,24 @@ public class SignInActivity extends AppCompatActivity {
     private Boolean isPasswordEmpty = true;
     private static final String TAG = "SIGNIN";
     private FirebaseAnalytics mFirebaseAnalytics;
+    private String currentUser = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-
-
         configAmplify();
+
+        try {
+            currentUser = Amplify.Auth.getCurrentUser().getUsername();
+
+            Intent goToHome = new Intent(this, MainActivity.class);
+            startActivity(goToHome);
+        } catch (RuntimeException error) {
+            Log.i("currentUser", "onCreate: " + error);
+
+        }
 //        Amplify.Auth.resetPassword(
 //                "mahmoud",
 //                result -> Log.i("AuthQuickstart", result.toString()),
@@ -125,7 +134,7 @@ public class SignInActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
-    private void configAmplify(){
+    private void configAmplify() {
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
