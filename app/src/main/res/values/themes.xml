@@ -22,4 +22,8 @@
     <style name="Theme.Taskmaster.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Taskmaster.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
 </resources>

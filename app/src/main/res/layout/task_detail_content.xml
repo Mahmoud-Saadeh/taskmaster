@@ -1,65 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".TaskDetail"
-    android:padding="40dp">
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp">
 
-    <TextView
-        android:id="@+id/taskDetailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/task_detail"
-        android:textSize="25sp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/taskDetailState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STATE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/taskDetailTitle"
-        android:layout_marginTop="10dp"
-        style="@style/TextAppearance.AppCompat.Small"/>
-
-    <ImageView
-        android:id="@+id/taskImageDetail"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetailState"
-        android:contentDescription="@string/task_image"
-        android:visibility="gone"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/taskDetailBody"
-        style="@style/TextAppearance.AppCompat.Body2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis enim vitae turpis suscipit, eget sollicitudin purus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskImageDetail" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="40dp"
+            tools:context=".TaskDetail">
 
-    <TextView
-        android:id="@+id/fileLinkDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/download_the_linked_file"
-        android:layout_marginTop="30dp"
-        android:visibility="gone"
-        android:textColor="@color/light_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetailBody" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/taskDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/task_detail"
+                android:textSize="25sp"
+
+                sothree:layout_constraintStart_toStartOf="parent"
+                sothree:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/taskDetailState"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="STATE"
+                sothree:layout_constraintStart_toStartOf="parent"
+                sothree:layout_constraintTop_toBottomOf="@id/taskDetailTitle" />
+
+            <ImageView
+                android:id="@+id/taskImageDetail"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/task_image"
+                android:visibility="gone"
+                sothree:layout_constraintStart_toStartOf="parent"
+                sothree:layout_constraintTop_toBottomOf="@+id/taskDetailState" />
+
+            <TextView
+                android:id="@+id/taskDetailBody"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis enim vitae turpis suscipit, eget sollicitudin purus euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+                sothree:layout_constraintStart_toStartOf="parent"
+                sothree:layout_constraintTop_toBottomOf="@+id/taskImageDetail" />
+
+            <LinearLayout
+                android:id="@+id/locationLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                sothree:layout_constraintStart_toStartOf="parent"
+                sothree:layout_constraintTop_toBottomOf="@+id/taskDetailBody">
+
+                <TextView
+                    android:id="@+id/latTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="Lat: " />
+
+                <TextView
+                    android:id="@+id/lonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lon: " />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fileLinkDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/download_the_linked_file"
+                android:textColor="@color/light_blue"
+                android:visibility="gone"
+                sothree:layout_constraintEnd_toEndOf="parent"
+                sothree:layout_constraintTop_toBottomOf="@+id/locationLayout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+    </LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

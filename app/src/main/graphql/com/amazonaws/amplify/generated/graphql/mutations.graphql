@@ -9,6 +9,8 @@ mutation CreateTask(
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -27,6 +29,8 @@ mutation UpdateTask(
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -45,6 +49,8 @@ mutation DeleteTask(
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -67,6 +73,8 @@ mutation CreateTeam(
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted
@@ -98,6 +106,8 @@ mutation UpdateTeam(
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted
@@ -129,6 +139,8 @@ mutation DeleteTeam(
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted

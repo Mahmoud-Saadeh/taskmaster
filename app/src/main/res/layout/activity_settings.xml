@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             app:title="@string/app_title"
             app:menu="@menu/top_app_bar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            app:titleTextColor="@color/white"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
