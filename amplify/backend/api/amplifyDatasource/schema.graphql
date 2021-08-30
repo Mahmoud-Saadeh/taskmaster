@@ -4,6 +4,8 @@ type Task @model @key(name: "byTeam", fields: ["teamID"]){
   body: String
   state: String
   fileName: String
+  lat: Float
+  lon: Float
   teamID: ID!
 }
 

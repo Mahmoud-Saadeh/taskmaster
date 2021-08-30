@@ -6,6 +6,8 @@ subscription OnCreateTask {
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -21,6 +23,8 @@ subscription OnUpdateTask {
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -36,6 +40,8 @@ subscription OnDeleteTask {
     body
     state
     fileName
+    lat
+    lon
     teamID
     _version
     _deleted
@@ -55,6 +61,8 @@ subscription OnCreateTeam {
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted
@@ -83,6 +91,8 @@ subscription OnUpdateTeam {
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted
@@ -111,6 +121,8 @@ subscription OnDeleteTeam {
         body
         state
         fileName
+        lat
+        lon
         teamID
         _version
         _deleted

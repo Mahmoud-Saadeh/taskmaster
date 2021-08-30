@@ -1,6 +1,11 @@
 # Task Master
 In this app you can sign up with your email and start adding tasks and filtering them by their team
 
+- 30/8/2021
+    1. Added a google map in the task detail page 
+    2. when a user add a task it will ask for permission to get their location and when they add the task the location will be saved to that task
+    ![location.png](screenshots/location.png)
+
 - 29/8/2021
     1. Added an intent filter to be able to accept an image file from other apps and add the image to the upload feature in add task
 

@@ -13,7 +13,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            app:titleTextColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/top_app_bar"
@@ -143,6 +143,25 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <LinearLayout
+            android:id="@+id/locationLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerTeam"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/latTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Lat: "/>
+            <TextView
+                android:id="@+id/lonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lon: "/>
+        </LinearLayout>
         <Button
             android:id="@+id/addTask"
             android:layout_width="wrap_content"
@@ -152,7 +171,7 @@
             android:text="@string/add_task"
             android:textColor="@color/gray_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerTeam" />
+            app:layout_constraintTop_toBottomOf="@+id/locationLayout" />
 
 <!--        <TextView-->
 <!--            android:id="@+id/tasks_count"-->

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private static PinpointManager pinpointManager;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,8 +173,15 @@ public class MainActivity extends AppCompatActivity {
 
                     adapter = new TaskViewAdapter(taskListAmp, position -> {
                         Intent goToDetailsIntent = new Intent(getBaseContext(), TaskDetail.class);
-                        goToDetailsIntent.putExtra("task_id", taskListAmp.get(position).getId());
+                        goToDetailsIntent.putExtra("task_title", taskListAmp.get(position).getTitle());
+                        goToDetailsIntent.putExtra("task_body", taskListAmp.get(position).getBody());
+                        goToDetailsIntent.putExtra("task_state", taskListAmp.get(position).getState());
                         goToDetailsIntent.putExtra("fileName", taskListAmp.get(position).getFileName());
+                        if (taskListAmp.get(position).getLat() != null){
+                            goToDetailsIntent.putExtra("lat", (double) taskListAmp.get(position).getLat());
+                            goToDetailsIntent.putExtra("lon", (double) taskListAmp.get(position).getLon());
+                        }
+
                         startActivity(goToDetailsIntent);
                     });
 

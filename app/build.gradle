@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -32,7 +33,10 @@ android {
 }
 
 dependencies {
-//    implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
 
@@ -49,6 +53,7 @@ dependencies {
 
     implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.25.0'
     implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.26.0@aar') { transitive = true }
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
 
     // room dependencies
     def room_version = "2.3.0"
